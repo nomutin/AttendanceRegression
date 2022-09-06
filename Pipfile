@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+matplotlib = "*"
+numpy = "*"
+scikit-learn = "*"
+dbtools = {git = "https://github.com/oakwood-fujiken/DataBase.git"}
+
+[dev-packages]
+autopep8 = "*"
+flake8 = "*"
+isort = "*"
+
+[requires]
+python_version = "3.9"
