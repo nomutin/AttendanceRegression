@@ -63,6 +63,13 @@ def create_personal_data(name: str, path_to_raw_data: str,
         m1_list = [int(int(d.strftime('%Y%m%d')) > fix_d) for d in
                    date_range(date(*initial_date), date(*final_date))]
 
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    month_list = []
+    for month in months:
+        month_list.append([int(d.strftime('%b') == month) for d in
+                           date_range(date(*initial_date), date(*final_date))])
+
     data = {
         'ymd': ymd_list,
         'attendance': attend_list,
@@ -70,13 +77,14 @@ def create_personal_data(name: str, path_to_raw_data: str,
         'is_m1': m1_list
     }
     data.update({k: v for k, v in zip(weekdays, week_list)})
+    data.update({k: v for k, v in zip(months, month_list)})
     df = pd.DataFrame(data=data)
     df.set_index('ymd', inplace=True)
     df.to_csv(f'csvdata/{name}_personal_data.csv')
 
 
 if __name__ == '__main__':
-    get_data()
-    name_to_upper('csvdata/dataset.csv', 'csvdata/dataset.csv')
+    # get_data()
+    # name_to_upper('csvdata/dataset.csv', 'csvdata/dataset.csv')
     for name in english_names:
         create_personal_data(name=name, path_to_raw_data='csvdata/dataset.csv')
