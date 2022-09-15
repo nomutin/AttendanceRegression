@@ -2,8 +2,9 @@ import os
 import pickle
 
 import pandas as pd
-from DBtools import english_names
 from sklearn.ensemble import AdaBoostClassifier
+
+from utils import students
 
 
 def train_model(name: str):
@@ -19,5 +20,5 @@ def train_model(name: str):
 
 
 if __name__ == '__main__':
-    for name in english_names:
-        train_model(name)
+    for student in students:
+        train_model(name=student)

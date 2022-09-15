@@ -1,33 +1,17 @@
 import os
-from datetime import date, timedelta
+from datetime import date
 from typing import Tuple
 
 import pandas as pd
-from DBtools import DataBaseConnection, english_names
+from DBtools import DataBaseConnection
 
-B4_students = ['Igarashi', 'Ishizuka', 'Imano', 'Nomura', 'Fujii']
+from utils import B4_students, date_range, students
 
 
 def get_data():
     os.makedirs('csvdata', exist_ok=True)
     dbc = DataBaseConnection(DB='dev')
     dbc.get_dataset()
-
-
-def name_to_upper(input_file_name: str, output_file_name: str) -> None:
-    df = pd.read_csv(input_file_name)
-    for i, _ in df.iterrows():
-        raw_name = df.at[i, 'name']
-        processed_name = raw_name[0].upper() + raw_name[1:]
-        df.at[i, 'name'] = processed_name
-    df.to_csv(output_file_name)
-
-
-def date_range(start: date, stop: date, step=timedelta(1)):
-    current = start
-    while current < stop:
-        yield current
-        current += step
 
 
 def create_personal_data(name: str, path_to_raw_data: str,
@@ -86,5 +70,6 @@ def create_personal_data(name: str, path_to_raw_data: str,
 if __name__ == '__main__':
     # get_data()
     # name_to_upper('csvdata/dataset.csv', 'csvdata/dataset.csv')
-    for name in english_names:
-        create_personal_data(name=name, path_to_raw_data='csvdata/dataset.csv')
+    for student in students:
+        create_personal_data(name=student,
+                             path_to_raw_data='csvdata/dataset.csv')
